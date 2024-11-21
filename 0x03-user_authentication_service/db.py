@@ -34,7 +34,12 @@ class DB:
         """Adds a new user to the databse
         """
         session = self._session
-        user = User(email=email, hashed_password=hashed_password)
+        user = User(
+                email=email,
+                hashed_password=hashed_password,
+                session_id=None,
+                reset_token=None
+                )
         session.add(user)
 
         session.commit()
