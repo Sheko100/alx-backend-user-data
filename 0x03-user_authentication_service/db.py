@@ -35,7 +35,7 @@ class DB:
     def add_user(self, email=None, hashed_password=None) -> User:
         """Adds a new user to the databse
         """
-        if !email or !hashed_password:
+        if not email or not hashed_password:
             return
 
         session = self._session
