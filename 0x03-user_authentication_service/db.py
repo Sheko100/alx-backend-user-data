@@ -48,18 +48,42 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """Gets a user
         """
         session = self._session
+        attr_dict = {}
+        col_names = User.__table__.columns
 
-        if "email" not in kwargs:
+        if len(kwargs) < 1:
+            return
+
+        col_name = list(kwargs.keys())[0]
+        if len(kwargs) > 1 or col_name not in col_names:
             raise InvalidRequestError
 
-        email = kwargs["email"]
-        user = session.query(User).filter_by(email=email).first()
+        attr_dict[col_name] = kwargs[col_name]
+
+        user = session.query(User).filter_by(**attr_dict).first()
 
         if (user is None):
             raise NoResultFound
 
         return user
+
+    def update_user(self, id, **kwargs) -> None:
+        """Updates the user data
+        """
+        session = self._session
+        col_names = User.__table__.columns
+
+        for key in kwargs:
+            if key == "id" or key not in col_names:
+                raise ValueError
+
+        user = self.find_user_by(id=id)
+
+        for key in kwargs:
+           setattr(user, key, kwargs[key])
+
+        session.commit()
