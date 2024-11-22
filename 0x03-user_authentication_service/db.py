@@ -84,6 +84,6 @@ class DB:
         user = self.find_user_by(id=id)
 
         for key in kwargs:
-           setattr(user, key, kwargs[key])
+            setattr(user, key, kwargs[key])
 
         session.commit()
