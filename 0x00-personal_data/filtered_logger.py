@@ -6,7 +6,7 @@ from typing import List
 
 
 def filter_datum(fields: List[str], redaction: str,
-                 message: List[str], separator: str) -> str:
+                 message: str, separator: str) -> str:
     """obfuscates data
     """
     message_chunks = re.split(separator, message)
