@@ -2,10 +2,11 @@
 """Module that obfuscates data
 """
 import re
+from typing import List
 
 
-def filter_datum(fields: list[str], redaction: str,
-                 message: list[str], separator: str) -> str:
+def filter_datum(fields: List[str], redaction: str,
+                 message: List[str], separator: str) -> str:
     """obfuscates data
     """
     message_chunks = re.split(separator, message)
