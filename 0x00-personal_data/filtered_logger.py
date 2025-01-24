@@ -18,8 +18,6 @@ def filter_datum(fields: List[str], redaction: str,
             if (re.search('^{}=.*'.format(field), chunk)):
                 chunk = re.sub('=.*', '={}'.format(redaction), chunk)
 
-        #print("{} will be added".format(chunk))
         new_message += '{};'.format(chunk)
-        #print(new_message)
 
     return new_message
