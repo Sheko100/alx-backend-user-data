@@ -4,7 +4,8 @@
 import re
 
 
-def filter_datum(fields, redaction, message, separator):
+def filter_datum(fields: list[str], redaction: str,
+                 message: list[str], separator: str) -> str:
     """obfuscates data
     """
     message_chunks = re.split(separator, message)
