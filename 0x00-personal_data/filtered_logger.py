@@ -44,7 +44,7 @@ class RedactingFormatter(logging.Formatter):
                             )
 
 
-def get_logger():
+def get_logger() -> logging.Logger:
     """gets a new logger"""
     handler = logging.StreamHandler()
     logger = logging.getLogger('user_data')
