@@ -70,4 +70,28 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         user=username,
         password=pwd,
         database=name)
+
     return cnx
+
+
+def main():
+    """Entry point"""
+
+    cnx = get_db()
+    cur = cnx.cursor()
+    logger = get_logger()
+
+    cur.execute('SELECT * from users')
+    rows = cur.fecthall()
+    for row in rows:
+        msg = f"name={row[0]};email={row[1]};phone={row[2]};\
+                ssn={row[3]};password={row[4];ip={row[5]};\
+                last_login={row[6]};user_agent={row[7]};"
+        logger.info(msg)
+
+    cur.close()
+    cnx.close()
+
+
+if __name__ == '__main__':
+    main()
