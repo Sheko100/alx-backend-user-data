@@ -4,7 +4,7 @@
 import bcrypt
 
 
-def hash_password(pwd):
+def hash_password(pwd: str) -> bcrypt.hashpw:
     """encryptes password
     """
     hashed = bcrypt.hashpw(pwd.encode("utf-8"), bcrypt.gensalt())
