@@ -8,3 +8,10 @@ class BasicAuth(Auth):
     """BasicAuth class
     """
     pass
+
+    def extract_base64_authorization_header(
+            self, authorization_header: str) -> str:
+        auth = authorization_header
+        if not auth or not isinstance(auth, str) or auth[:6] != 'Basic ':
+            return None
+        return auth[6:]
