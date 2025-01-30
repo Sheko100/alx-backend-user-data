@@ -22,6 +22,9 @@ class Auth:
     def authorization_header(self, request=None) -> str:
         """Adds the autorization header to the request
         """
+        if request and 'Authorization' in request.headers:
+            print(request.headers['Authorization'])
+            return request.headers['Authorization']
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
