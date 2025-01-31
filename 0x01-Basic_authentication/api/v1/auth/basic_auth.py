@@ -62,3 +62,15 @@ class BasicAuth(Auth):
             return None
 
         return user
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """Retrieves a User instance"""
+        header_value = self.authorization_header(request)
+        if header_value:
+            auth_value = self.extract_base64_authorization_header(header_value)
+            auth_text = self.decode_base64_authorization_header(auth_value)
+            user_credentials = self.extract_user_credentials(auth_text)
+            user = self.user_object_from_credentials(
+                    user_email=user_credentials[0],
+                    user_pwd=user_credentials[1])
+            return user
