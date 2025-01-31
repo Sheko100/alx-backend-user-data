@@ -2,7 +2,9 @@
 """Module that defines the BasicAuth class
 """
 from api.v1.auth.auth import Auth
+from models.user import User
 import base64
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -40,3 +42,23 @@ class BasicAuth(Auth):
 
         credentials = value.split(':')
         return tuple(credentials)
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
+        """Gets a user object based on credentials"""
+        email_valid = user_email and isinstance(user_email, str)
+        pwd_valid = user_pwd and isinstance(user_pwd, str)
+
+        if not email_valid or not pwd_valid:
+            return None
+
+        users = User.search({'email': user_email})
+        if len(users) < 1:
+            return None
+
+        user = users[0]
+
+        if not user.is_valid_password(user_pwd):
+            return None
+
+        return user
