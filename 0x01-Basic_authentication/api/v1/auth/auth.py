@@ -18,8 +18,6 @@ class Auth:
             path += '/'
         if excluded_paths:
             for excluded_path in excluded_paths:
-                print("pathhh", path)
-                print("excluded path", excluded_path)
 
                 if path == excluded_path:
                     status = False
@@ -31,7 +29,6 @@ class Auth:
                         status = False
                         break
 
-        print('require auth', status)
         return status
 
     def authorization_header(self, request=None) -> str:
