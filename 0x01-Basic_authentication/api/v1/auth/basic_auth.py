@@ -40,7 +40,8 @@ class BasicAuth(Auth):
         if not value or not isinstance(value, str) or ':' not in value:
             return None, None
 
-        credentials = value.split(':')
+        credentials = value.split(':', 1)
+        print('cred', credentials)
         return tuple(credentials)
 
     def user_object_from_credentials(
