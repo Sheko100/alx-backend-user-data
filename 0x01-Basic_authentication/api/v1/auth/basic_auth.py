@@ -41,7 +41,6 @@ class BasicAuth(Auth):
             return None, None
 
         credentials = value.split(':', 1)
-        print('cred', credentials)
         return tuple(credentials)
 
     def user_object_from_credentials(
