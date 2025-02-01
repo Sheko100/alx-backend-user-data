@@ -11,19 +11,33 @@ class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """request authentication for specfic paths
         """
+        status = True
         if not path:
-            return True
+            return status
         elif path[-1] != '/':
             path += '/'
-        if excluded_paths and path in excluded_paths:
-            return False
-        return True
+        if excluded_paths:
+            for excluded_path in excluded_paths:
+                print("pathhh", path)
+                print("excluded path", excluded_path)
+
+                if path == excluded_path:
+                    status = False
+                    break
+
+                if excluded_path[-1] == '*':
+                    path_part = excluded_path[:-1]
+                    if path_part in path:
+                        status = False
+                        break
+
+        print('require auth', status)
+        return status
 
     def authorization_header(self, request=None) -> str:
         """Adds the autorization header to the request
         """
         if request and 'Authorization' in request.headers:
-            print(request.headers['Authorization'])
             return request.headers['Authorization']
         return None
 
