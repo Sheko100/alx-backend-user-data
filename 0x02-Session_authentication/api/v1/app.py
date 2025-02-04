@@ -54,11 +54,13 @@ def validation():
                         '/api/v1/unauthorized/',
                         '/api/v1/forbidden/',
                         '/api/v1/stat*',
+                        '/api/v1/auth_session/login/',
                      ]
     if not auth or not auth.require_auth(request.path, excluded_paths):
         return
 
-    if not auth.authorization_header(request):
+    if not auth.authorization_header(request) or \
+            not auth.session_cookie(request):
         abort(401)
 
     curr_user = auth.current_user(request)
