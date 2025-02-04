@@ -59,7 +59,7 @@ def validation():
     if not auth or not auth.require_auth(request.path, excluded_paths):
         return
 
-    if not auth.authorization_header(request) or \
+    if not auth.authorization_header(request) and \
             not auth.session_cookie(request):
         abort(401)
 
