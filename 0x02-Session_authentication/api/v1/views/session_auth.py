@@ -11,29 +11,30 @@ import os
 def login() -> str:
     """ GET /api/v1/auth_session/login
     Return:
-      - Applies login
+      - Send a response with a new session
     """
     email = request.form.get('email')
     pwd = request.form.get('password')
 
     if not email:
-        return jsonify({'error', 'email missing'}), 400
+        return jsonify({'error': 'email missing'}), 400
 
     if not pwd:
-        return jsonify({'error', 'password missing'}), 400
+        return jsonify({'error': 'password missing'}), 400
 
-    user = User.search({'email': email})
-    if not user:
-        return jsonify({'error': 'no user found for this email'}, 404)
+    users = User.search({'email': email})
+    if len(users) < 1:
+        return jsonify({'error': 'no user found for this email'}), 404
 
+    user = users[0]
     if not user.is_valid_password(pwd):
-        return jsonify({'error': 'wrong password'}, 401)
+        return jsonify({'error': 'wrong password'}), 401
 
     from api.v1.app import auth
 
-    session_id = auth.create_session(user_id)
+    session_id = auth.create_session(user.id)
     response = jsonify(user.to_json())
-    cookie_name = os.environ.get('SESSION_COOKIE')
+    cookie_name = os.environ.get('SESSION_NAME', '_my_session_id')
     response.set_cookie(cookie_name, session_id)
-    print('res', response)
+
     return response
