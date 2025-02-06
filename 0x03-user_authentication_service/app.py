@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Module that defines a flask app
 """
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from auth import Auth
 
+auth = Auth()
 app = Flask(__name__)
 
 
@@ -11,6 +13,20 @@ def root():
     """root route
     """
     return jsonify({'message': 'Bienvenue'}), 200
+
+
+@app.route('/users', methods=['POST'])
+def users():
+    """Users route
+    """
+    email = request.form['email']
+    password = request.form['password']
+
+    try:
+        user = auth.register_user(email, password)
+        return jsonify({'email': email, 'message': 'user created'})
+    except ValueError:
+        return jsonify({'message': 'email already registered'}), 400
 
 
 if __name__ == "__main__":
