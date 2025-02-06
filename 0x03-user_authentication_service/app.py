@@ -4,7 +4,7 @@
 from flask import Flask, jsonify, request, abort
 from auth import Auth
 
-auth = Auth()
+AUTH = Auth()
 app = Flask(__name__)
 
 
