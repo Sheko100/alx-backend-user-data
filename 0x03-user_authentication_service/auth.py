@@ -70,7 +70,7 @@ class Auth:
         except Exception:
             pass
 
-    def get_user_from_session_id(session_id: str) -> User:
+    def get_user_from_session_id(self, session_id: str) -> User:
         """gets the user
         """
         if session_id is None or not isinstance(session_id, str):
